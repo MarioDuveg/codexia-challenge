@@ -1550,3 +1550,156 @@ footer {
     border-radius: 20px;
   }
 }
+
+
+/* Video CODEXIA */
+.video-section {
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+
+.video-heading {
+  margin-bottom: 34px;
+}
+
+.video-shell {
+  position: relative;
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: linear-gradient(145deg, rgba(14,14,17,.98), rgba(4,4,6,.98));
+  box-shadow: 0 26px 80px rgba(0,0,0,.42), inset 0 0 40px rgba(255,22,56,.025);
+  clip-path: polygon(22px 0,100% 0,100% calc(100% - 22px),calc(100% - 22px) 100%,0 100%,0 22px);
+}
+
+.video-shell::before,
+.video-shell::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  width: 72px;
+  height: 2px;
+  background: var(--red);
+  box-shadow: 0 0 14px rgba(255,22,56,.55);
+}
+.video-shell::before { top: 7px; left: 34px; }
+.video-shell::after { right: 34px; bottom: 7px; }
+
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(255,255,255,.1);
+}
+
+.video-frame iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 6px 0;
+  color: #73767e;
+  font-family: "Orbitron", sans-serif;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+}
+
+/* Validación visual del preregistro */
+.field.is-invalid > span,
+.choice-group.is-invalid legend {
+  color: #ff6a7f;
+}
+
+.field.is-invalid input,
+.field.is-invalid select,
+.registration-form.was-validated .field input:invalid,
+.registration-form.was-validated .field select:invalid {
+  border-color: rgba(255,22,56,.95);
+  background: rgba(255,22,56,.07);
+  box-shadow: 0 0 0 2px rgba(255,22,56,.10), 0 0 20px rgba(255,22,56,.12);
+}
+
+.choice-group.is-invalid {
+  padding: 12px;
+  margin-left: -12px;
+  margin-right: -12px;
+  border: 1px solid rgba(255,22,56,.55);
+  background: rgba(255,22,56,.045);
+  box-shadow: inset 0 0 24px rgba(255,22,56,.035);
+}
+
+.choice-group.is-invalid .choice-card {
+  border-color: rgba(255,22,56,.32);
+}
+
+.field.is-invalid input:focus,
+.field.is-invalid select:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(255,22,56,.14), 0 0 24px rgba(255,22,56,.14);
+}
+
+/* Confirmación de preregistro */
+.registration-success[hidden] {
+  display: none;
+}
+
+.registration-success {
+  margin: 0 0 26px;
+  padding: 30px 22px;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  text-align: center;
+  border: 1px solid rgba(91,225,143,.55);
+  background: radial-gradient(circle at 50% 35%, rgba(91,225,143,.10), transparent 55%), rgba(91,225,143,.035);
+  box-shadow: 0 0 34px rgba(91,225,143,.09), inset 0 0 32px rgba(91,225,143,.035);
+  clip-path: polygon(18px 0,100% 0,100% calc(100% - 18px),calc(100% - 18px) 100%,0 100%,0 18px);
+}
+
+.registration-success-check {
+  width: 88px;
+  height: 88px;
+  display: grid;
+  place-items: center;
+  border: 2px solid #69e79a;
+  border-radius: 50%;
+  color: #85f0aa;
+  font-family: "Orbitron", sans-serif;
+  font-size: 52px;
+  line-height: 1;
+  text-shadow: 0 0 16px rgba(105,231,154,.45);
+  box-shadow: 0 0 28px rgba(105,231,154,.15), inset 0 0 20px rgba(105,231,154,.07);
+  animation: successCheckIn .45s cubic-bezier(.2,.8,.2,1) both;
+}
+
+.registration-success strong {
+  font-family: "Orbitron", sans-serif;
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  color: #d8f8e4;
+}
+
+.registration-success span {
+  max-width: 460px;
+  color: #a9c9b5;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+@keyframes successCheckIn {
+  from { opacity: 0; transform: scale(.65); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 760px) {
+  .video-shell { padding: 9px; }
+  .video-meta { flex-direction: column; gap: 5px; }
+  .registration-success { padding: 26px 16px; }
+  .registration-success-check { width: 76px; height: 76px; font-size: 44px; }
+}

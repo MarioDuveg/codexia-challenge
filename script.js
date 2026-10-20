@@ -48,6 +48,7 @@ const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_mhdseBhBlfLq7CHVxQUzhg_bmeGQsM-
 const preregistroForm = document.getElementById('preregistroForm');
 const formMessage = document.getElementById('formMessage');
 const submitButton = document.getElementById('submitPreregistro');
+const registrationSuccess = document.getElementById('registrationSuccess');
 
 function showFormMessage(type, message) {
   if (!formMessage) return;
@@ -68,14 +69,58 @@ function setSubmitting(isSubmitting) {
   }
 }
 
+
+function clearValidationUI() {
+  if (!preregistroForm) return;
+  preregistroForm.classList.remove('was-validated');
+  preregistroForm.querySelectorAll('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+  preregistroForm.querySelectorAll('[aria-invalid="true"]').forEach((el) => el.removeAttribute('aria-invalid'));
+}
+
+function updateValidationUI() {
+  if (!preregistroForm) return [];
+
+  preregistroForm.classList.add('was-validated');
+  preregistroForm.querySelectorAll('.is-invalid').forEach((el) => el.classList.remove('is-invalid'));
+  preregistroForm.querySelectorAll('[aria-invalid="true"]').forEach((el) => el.removeAttribute('aria-invalid'));
+
+  const invalidControls = [...preregistroForm.querySelectorAll('input, select, textarea')]
+    .filter((control) => !control.validity.valid && control.name !== 'website');
+
+  invalidControls.forEach((control) => {
+    control.setAttribute('aria-invalid', 'true');
+    const field = control.closest('.field');
+    const group = control.closest('.choice-group');
+    if (field) field.classList.add('is-invalid');
+    if (group) group.classList.add('is-invalid');
+  });
+
+  return invalidControls;
+}
+
+function showRegistrationSuccess() {
+  if (!registrationSuccess) return;
+  registrationSuccess.hidden = false;
+  registrationSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function hideRegistrationSuccess() {
+  if (registrationSuccess) registrationSuccess.hidden = true;
+}
+
 if (preregistroForm) {
   preregistroForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     showFormMessage('', '');
+    hideRegistrationSuccess();
 
-    if (!preregistroForm.checkValidity()) {
-      preregistroForm.reportValidity();
-      showFormMessage('error', 'Revisa los campos obligatorios antes de continuar.');
+    const invalidControls = updateValidationUI();
+    if (invalidControls.length) {
+      showFormMessage('error', 'Revisa los campos marcados en rojo antes de continuar.');
+      const firstInvalid = invalidControls[0];
+      firstInvalid.focus({ preventScroll: true });
+      const target = firstInvalid.closest('.field, .choice-group') || firstInvalid;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
 
@@ -132,16 +177,20 @@ if (preregistroForm) {
       }
 
       preregistroForm.reset();
-      showFormMessage(
-        'success',
-        '¡Listo! Tu preregistro quedó guardado. Te contactaremos cuando tengamos novedades de CODEXIA.'
-      );
+      clearValidationUI();
+      showFormMessage('', '');
+      showRegistrationSuccess();
     } catch (error) {
       if (error.message === 'duplicate_email') {
         showFormMessage(
           'error',
           'Ese correo ya está preregistrado. Si necesitas actualizar tus datos, contáctanos.'
         );
+        const emailInput = preregistroForm.querySelector('input[name="email"]');
+        if (emailInput) {
+          emailInput.setAttribute('aria-invalid', 'true');
+          emailInput.closest('.field')?.classList.add('is-invalid');
+        }
       } else {
         showFormMessage(
           'error',
@@ -151,6 +200,35 @@ if (preregistroForm) {
     } finally {
       setSubmitting(false);
     }
+  });
+}
+
+
+if (preregistroForm) {
+  preregistroForm.addEventListener('input', (event) => {
+    hideRegistrationSuccess();
+    const control = event.target;
+    if (!(control instanceof HTMLInputElement || control instanceof HTMLSelectElement || control instanceof HTMLTextAreaElement)) return;
+
+    const field = control.closest('.field');
+    if (field && control.validity.valid) {
+      field.classList.remove('is-invalid');
+      control.removeAttribute('aria-invalid');
+    }
+
+    const group = control.closest('.choice-group');
+    if (group) {
+      const requiredControls = [...group.querySelectorAll('input[required], select[required], textarea[required]')];
+      const groupIsValid = requiredControls.length === 0 || requiredControls.every((item) => item.validity.valid);
+      if (groupIsValid) {
+        group.classList.remove('is-invalid');
+        requiredControls.forEach((item) => item.removeAttribute('aria-invalid'));
+      }
+    }
+  });
+
+  preregistroForm.addEventListener('change', () => {
+    if (preregistroForm.classList.contains('was-validated')) updateValidationUI();
   });
 }
 
