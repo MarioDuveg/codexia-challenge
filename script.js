@@ -419,14 +419,3 @@ window.addEventListener('load', () => {
     });
   }
 });
-
-
-// Modo presentación: muestra el QR al final sólo con ?presenting en la URL.
-(() => {
-  const params = new URLSearchParams(window.location.search);
-  const presentingQr = document.getElementById('presentingQr');
-
-  if (presentingQr && params.has('presenting')) {
-    presentingQr.hidden = false;
-  }
-})();
