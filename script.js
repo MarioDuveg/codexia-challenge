@@ -419,3 +419,24 @@ window.addEventListener('load', () => {
     });
   }
 });
+
+
+const missionVideoFrame = document.getElementById('missionVideoFrame');
+const missionVideoPlay = document.getElementById('missionVideoPlay');
+
+if (missionVideoFrame && missionVideoPlay) {
+  missionVideoPlay.addEventListener('click', () => {
+    if (missionVideoFrame.classList.contains('is-playing')) return;
+
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/uPzdcvvG328?autoplay=1&playsinline=1&rel=0&modestbranding=1';
+    iframe.title = 'Video de CODEXIA — Conoce la misión';
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.setAttribute('playsinline', '');
+
+    missionVideoFrame.classList.add('is-playing');
+    missionVideoFrame.replaceChildren(iframe);
+  });
+}
