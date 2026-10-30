@@ -393,12 +393,39 @@ function scrollToPreregistro({ smooth = false } = {}) {
   });
 }
 
-document.querySelectorAll('a[href="#registro"]').forEach((link) => {
+function urlRequestsPreregistro() {
+  const hash = window.location.hash.toLowerCase();
+  const params = new URLSearchParams(window.location.search);
+  const path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+
+  return (
+    hash === '#registro' ||
+    hash === '#preregistro' ||
+    params.has('registro') ||
+    params.has('preregistro') ||
+    path.endsWith('/registro') ||
+    path.endsWith('/preregistro')
+  );
+}
+
+function settleOnPreregistro({ smooth = false } = {}) {
+  if (!urlRequestsPreregistro()) return;
+
+  // El hero, las fuentes y los embeds pueden mover el layout después del primer render.
+  // Reposicionamos varias veces durante la carga para que el formulario quede como destino final.
+  scrollToPreregistro({ smooth });
+  requestAnimationFrame(() => scrollToPreregistro({ smooth: false }));
+  window.setTimeout(() => scrollToPreregistro({ smooth: false }), 120);
+  window.setTimeout(() => scrollToPreregistro({ smooth: false }), 650);
+  window.setTimeout(() => scrollToPreregistro({ smooth: false }), 1400);
+}
+
+document.querySelectorAll('a[href="#registro"], a[href="#preregistro"]').forEach((link) => {
   link.addEventListener('click', (event) => {
     event.preventDefault();
 
-    if (window.location.hash !== '#registro') {
-      history.pushState(null, '', '#registro');
+    if (window.location.hash !== '#preregistro') {
+      history.pushState(null, '', '#preregistro');
     }
 
     scrollToPreregistro({ smooth: true });
@@ -406,18 +433,17 @@ document.querySelectorAll('a[href="#registro"]').forEach((link) => {
 });
 
 window.addEventListener('hashchange', () => {
-  if (window.location.hash === '#registro') {
-    scrollToPreregistro({ smooth: true });
+  if (urlRequestsPreregistro()) {
+    settleOnPreregistro({ smooth: true });
   }
 });
 
+window.addEventListener('DOMContentLoaded', () => {
+  settleOnPreregistro({ smooth: false });
+});
+
 window.addEventListener('load', () => {
-  if (window.location.hash === '#registro') {
-    // Reposiciona después de que estilos, fuentes e imágenes hayan definido el layout final.
-    requestAnimationFrame(() => {
-      window.setTimeout(() => scrollToPreregistro({ smooth: false }), 80);
-    });
-  }
+  settleOnPreregistro({ smooth: false });
 });
 
 

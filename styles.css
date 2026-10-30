@@ -1787,3 +1787,17 @@ footer {
 }
 
 
+
+
+.registration-anchor-alias {
+  display: block;
+  width: 0;
+  height: 0;
+  scroll-margin-top: 96px;
+}
+
+@media (max-width: 760px) {
+  .registration-anchor-alias {
+    scroll-margin-top: 82px;
+  }
+}
