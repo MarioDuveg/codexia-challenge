@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="scores.css" />
 </head>
 <body>
   <div class="ambient-grid" aria-hidden="true"></div>
@@ -32,6 +33,7 @@
       <a href="#participantes">Participantes</a>
       <a href="#premio">Premio</a>
       <a href="#itinerario">Itinerario</a>
+      <a href="#resultados">Resultados</a>
       <a class="nav-cta" href="#registro">Preregistro <span>›</span></a>
     </nav>
   </header>
@@ -70,7 +72,7 @@
         <div class="hero-intel" aria-label="Información destacada del evento">
           <span>ENTRADA // SIN COSTO</span>
           <span>PREMIO // $2000 MXN POR INTEGRANTE</span>
-          <span>SEDE // TEC · SUM</span>
+          <span>SEDE // TEC · DESIGN THINKING</span>
           <span>FECHA // 7 DE NOVIEMBRE · 8:00 AM</span>
         </div>
 
@@ -124,6 +126,7 @@
         <div class="hero-actions">
           <a class="btn btn-primary" href="#registro">QUIERO PARTICIPAR <span>›</span></a>
           <a class="btn btn-outline" href="#mision">VER LA MISIÓN <span>›</span></a>
+          <a class="btn btn-outline" href="#resultados">VER RESULTADOS <span>›</span></a>
         </div>
       </div>
 
@@ -313,7 +316,7 @@
           </div>
           <h3>Tecnológico de Monterrey</h3>
           <strong class="venue-campus">Campus Sonora Norte</strong>
-          <strong class="venue-room">Sala de Usos Múltiples (SUM)</strong>
+          <strong class="venue-room">Sala Design Thinking</strong>
           <address>
             Blvr. Enrique Mazón López 965<br>
             C.P. 83000 · Hermosillo, Sonora, México
@@ -332,7 +335,7 @@
           <h2>ITINERARIO<br><strong>DE LA MISIÓN.</strong></h2>
         </div>
         <p>
-          Entrada sin costo. La sede base del evento será la Sala de Usos Múltiples (SUM) del
+          Entrada sin costo. La sede base del evento será la Sala Design Thinking del
           Tecnológico de Monterrey, Campus Sonora Norte.
         </p>
       </div>
@@ -407,6 +410,68 @@
       </div>
     </section>
 
+
+    <!-- Visor público, únicamente lectura: Supabase / public.scores. -->
+    <section class="section scores-section" id="resultados" aria-labelledby="scoresTitle">
+      <div class="scores-ambient" aria-hidden="true"></div>
+      <div class="scores-inner">
+        <div class="scores-heading reveal">
+          <div>
+            <span class="eyebrow">LIVE DATA // CODEXIA SCORES</span>
+            <h2 id="scoresTitle">TABLA DE<br><strong>POSICIONES.</strong></h2>
+          </div>
+          <p>Los equipos suman puntos en cuatro talleres y en la Batalla final. Los resultados se consultan directamente desde Supabase cada 15 segundos.</p>
+        </div>
+
+        <div class="scores-toolbar reveal">
+          <div class="scores-status-wrap">
+            <span class="scores-live-light" id="scoresLiveLight" aria-hidden="true"></span>
+            <span id="scoresStatus" role="status" aria-live="polite">Conectando con los resultados…</span>
+          </div>
+          <div class="scores-toolbar-actions">
+            <label class="scores-order-label" for="scoresOrder">
+              <span>ORDENAR POR</span>
+              <select id="scoresOrder" aria-label="Ordenar clasificación">
+                <option value="total">Puntaje total</option>
+                <option value="batalla_final">Batalla final</option>
+              </select>
+            </label>
+            <button type="button" id="scoresRefresh" class="scores-refresh">↻ ACTUALIZAR</button>
+          </div>
+        </div>
+
+        <div class="scores-metrics reveal" aria-label="Resumen del marcador">
+          <div class="scores-metric"><span>EQUIPOS REGISTRADOS</span><strong id="scoresTeams">—</strong></div>
+          <div class="scores-metric"><span>PRIMER LUGAR</span><strong id="scoresLeader">—</strong></div>
+          <div class="scores-metric"><span>PUNTAJE LÍDER</span><strong id="scoresTopScore">—</strong></div>
+        </div>
+
+        <div class="scores-podium reveal" id="scoresPodium" aria-label="Los tres primeros lugares">
+          <p class="scores-placeholder">Esperando las puntuaciones de los equipos…</p>
+        </div>
+
+        <div class="scores-table-shell reveal">
+          <div class="scores-table-heading">
+            <span class="eyebrow">RANKING // 4 TALLERES + BATALLA FINAL</span>
+            <span id="scoresUpdated">Aún sin sincronizar</span>
+          </div>
+          <div class="scores-table-scroll" role="region" aria-label="Tabla de puntuaciones por equipo" tabindex="0">
+            <table class="scores-table">
+              <caption class="scores-sr-only">Clasificación de equipos de CODEXIA con puntuaciones por taller, Batalla final y total.</caption>
+              <thead><tr>
+                <th scope="col">POS.</th><th scope="col">EQUIPO</th>
+                <th scope="col">TALLER 1</th><th scope="col">TALLER 2</th>
+                <th scope="col">TALLER 3</th><th scope="col">TALLER 4</th>
+                <th scope="col">BATALLA FINAL</th><th scope="col">TOTAL</th>
+              </tr></thead>
+              <tbody id="scoresRows"><tr><td colspan="8" class="scores-empty">Buscando resultados en Supabase…</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <p class="scores-note">Visualización pública de solo lectura. Las puntuaciones se registran desde otra aplicación.</p>
+      </div>
+    </section>
+
     <section class="final-cta registration-section" id="registro-section" data-nav-id="registro">
       <div class="arena" aria-hidden="true">
         <span class="arena-ring ring-a"></span>
@@ -421,13 +486,13 @@
           <h2>¿ACEPTAS<br>EL RETO?</h2>
           <p>
             La entrada es sin costo y el cupo será limitado. CODEXIA se llevará a cabo el 7 de noviembre a las 8:00 AM en la
-            Sala de Usos Múltiples (SUM) del Tecnológico de Monterrey, Campus Sonora Norte.
+            Sala Design Thinking del Tecnológico de Monterrey, Campus Sonora Norte.
           </p>
 
           <div class="registration-location">
             <span>⌖ SEDE</span>
             <strong>Tecnológico de Monterrey · Campus Sonora Norte</strong>
-            <strong>Sala de Usos Múltiples (SUM)</strong>
+            <strong>Sala Design Thinking</strong>
             <small>Blvr. Enrique Mazón López 965 · C.P. 83000 · Hermosillo, Sonora</small>
           </div>
 
@@ -629,7 +694,7 @@
       <span class="brand-emblem" aria-hidden="true"><i></i></span>
       <span class="brand-word">CODE<span>X</span>IA</span>
     </a>
-    <p>7 de noviembre · 8:00 AM · Entrada sin costo · Tec de Monterrey, Campus Sonora Norte · Sala de Usos Múltiples (SUM).</p>
+    <p>7 de noviembre · 8:00 AM · Entrada sin costo · Tec de Monterrey, Campus Sonora Norte · Sala Design Thinking.</p>
     <a href="#inicio" class="back-top">VOLVER ARRIBA ↑</a>
   </footer>
 
@@ -646,5 +711,6 @@
   </section>
 
   <script src="script.js"></script>
+  <script src="scores.js" defer></script>
 </body>
 </html>
