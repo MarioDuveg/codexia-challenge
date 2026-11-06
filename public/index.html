@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#050506">
+  <meta name="description" content="CODEXIA // CTF. Cinco retos de ciberseguridad contra el reloj.">
+  <title>CODEXIA // Design Thinking</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/public/styles.css">
+  <script src="/public/main.js" defer></script>
+  <script src="/public/scores.js" defer></script>
+</head>
+<body class="app-screen">
+  <div class="ambient-grid" aria-hidden="true"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="brand" aria-label="Codexia Design Thinking"><span class="brand-emblem" aria-hidden="true"><i></i></span><span class="brand-word">CODE<span>X</span>IA</span><span class="brand-divider" aria-hidden="true"></span><span class="brand-sub">DESIGN THINKING</span></div>
+    <div class="top-right"><button type="button" class="scores-nav-button" id="scoresOpenBtn" aria-haspopup="dialog" aria-controls="scoresOverlay" aria-expanded="false"><span class="scores-nav-dot" aria-hidden="true"></span> SCORES <span aria-hidden="true">↗</span></button><span class="connection"><i></i> SISTEMA EN LÍNEA</span><span class="round-marker">PROTOCOLO // 05 ETAPAS</span></div>
+  </header>
+
+  <main class="workspace" id="workspace" hidden>
+    <div class="mission-header">
+      <div><p class="micro"><span class="micro-bar"></span> CODEXIA // OPERACIÓN CÓDIGO FANTASMA</p><h1>ENTRA AL <em>SISTEMA.</em></h1><p class="subhead">Cinco desafíos de ciberseguridad. Una misión contrarreloj.</p></div>
+      <div class="timer-box"><span class="timer-label"><span class="pulse-dot"></span> TIEMPO DE MISIÓN // LIVE</span><div id="timer" class="timer" aria-live="off">00:00.00</div><span class="timer-meta" id="timerMeta">CRONÓMETRO ACTIVO</span><span class="timer-remaining" id="remainingTime">45:00 RESTANTES</span></div>
+    </div>
+
+    <div class="play-grid">
+      <aside class="sidebar">
+        <div class="sidebar-head"><div class="side-mini">IDENTIFICADOR // EQUIPO</div><div id="teamName" class="team-name">—</div><div class="team-active"><span class="pulse-dot"></span><span id="teamStatus">MISIÓN EN CURSO</span></div></div>
+        <div class="sidebar-section"><span>PROGRESO / PROTOCOLO</span><strong id="progressText">00 / 05</strong></div>
+        <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div><div class="score-panel"><span>PUNTUACIÓN ACTUAL / 100</span><strong id="currentScore">01</strong><small id="syncStatus" aria-live="polite">Se enviará a Supabase al resolver retos.</small></div>
+        <nav class="level-list" id="levelList" aria-label="Retos de la misión"></nav>
+        <div class="sidebar-bottom"><span>◇</span><p><strong>INTEL // 001</strong><br>El navegador revela más de lo que se ve. Usa F12 para inspeccionar.</p></div>
+      </aside>
+
+      <section class="challenge-panel" aria-labelledby="challengePanelTitle">
+        <div class="challenge-toolbar"><div><span class="toolbar-kicker">CODEXIA / TERMINAL DE OPERACIONES</span><h2 id="challengePanelTitle">DESAFÍO ACTIVO</h2></div><div class="toolbar-right"><a id="openTab" href="#" target="_blank" rel="noopener">ABRIR EN PESTAÑA ↗</a><span class="toolbar-id" id="activeLevel">NIVEL 01 / 05</span></div></div>
+        <div class="iframe-wrap" id="iframeWrap"><iframe id="challengeFrame" title="Reto actual de ciberseguridad" referrerpolicy="same-origin"></iframe></div>
+        <div class="finish-card" id="finishCard" hidden>
+          <div class="finish-icon" id="finishIcon">✓</div><span class="finish-eyebrow" id="finishEyebrow">[ PROTOCOLO COMPLETADO // 05 / 05 ]</span><h2 id="finishTitle">ACCESO <span>CONCEDIDO.</span></h2><p id="finishDescription">Superaron todas las barreras. Su tiempo quedó registrado oficialmente:</p><div id="finalTime" class="final-time">00:00.00</div><div class="result-score">CALIFICACIÓN: <strong id="finalScore">—</strong><span> / 100</span></div><div class="place" id="finalPlace">RESULTADO REGISTRADO</div>
+          <section class="weakness-panel" id="matrixPanel" aria-labelledby="weaknessTitle">
+            <span class="weakness-eyebrow">[ ARCHIVO DESBLOQUEADO // INFORMACIÓN FINAL ]</span>
+            <h3 id="weaknessTitle">MATRIZ DE <em>DEBILIDADES.</em></h3>
+            <p>Cada color es vulnerable al color que aparece a su derecha.</p>
+            <ul class="weakness-grid" aria-label="Relaciones de debilidad de colores">
+              <li><span class="weakness-color weakness-yellow">AMARILLO</span><span class="weakness-arrow" aria-label="es débil frente a">→</span><span class="weakness-color weakness-red">ROJO</span></li>
+              <li><span class="weakness-color weakness-red">ROJO</span><span class="weakness-arrow" aria-label="es débil frente a">→</span><span class="weakness-color weakness-green">VERDE</span></li>
+              <li><span class="weakness-color weakness-green">VERDE</span><span class="weakness-arrow" aria-label="es débil frente a">→</span><span class="weakness-color weakness-blue">AZUL</span></li>
+              <li><span class="weakness-color weakness-blue">AZUL</span><span class="weakness-arrow" aria-label="es débil frente a">→</span><span class="weakness-color weakness-yellow">AMARILLO</span></li>
+            </ul>
+          </section><p class="finish-foot" id="finishFoot">La mejor calificación del equipo se conserva en Supabase.</p><div class="finish-actions"><button class="button-outline" id="reviewBtn">REVISAR DESAFÍOS <span aria-hidden="true">›</span></button><button class="button-outline" id="retryBtn">REINTENTAR CON ESTE EQUIPO <span aria-hidden="true">↻</span></button><a class="button-outline" href="/resultados" target="_blank" rel="noopener">VER RESULTADOS ↗</a></div><p class="join-error" id="retryError" role="alert"></p>
+        </div>
+        <footer class="panel-footer"><span>HERRAMIENTAS // F12 · INSPECCIONAR · CÓDIGO FUENTE</span><span>CODEXIA / CYBERSECURITY LAB</span></footer>
+      </section>
+    </div>
+  </main>
+
+<div class="scores-overlay" id="scoresOverlay" role="dialog" aria-modal="true" aria-labelledby="scoresDialogTitle" hidden>
+  <div class="scores-modal-shell">
+    <div class="scores-modal-top"><div><span class="scores-modal-kicker">CODEXIA / RANKING</span><h2 id="scoresDialogTitle">SCORES <span>POR ACTIVIDAD</span></h2></div><button type="button" id="scoresCloseBtn" class="scores-close" aria-label="Cerrar clasificación">CERRAR <span aria-hidden="true">✕</span></button></div>
+<section class="scores-content" id="scoresRoot" data-scores-root aria-label="Clasificación de equipos">
+  <div class="scores-intro">
+    <div>
+      <p class="micro"><span class="micro-bar"></span> CODEXIA // DESIGN THINKING</p>
+      <h2>SCORES <em>LIVE.</em></h2>
+      <p>Clasificación de equipos por actividad. Los resultados se consultan directamente en la base de datos de Codexia.</p>
+    </div>
+    <div class="scores-live-indicator"><span aria-hidden="true"></span> LEADERBOARD / EN VIVO</div>
+  </div>
+  <div class="scores-filter-wrap">
+    <p class="scores-section-label">SELECCIONA UNA ACTIVIDAD</p>
+    <div class="scores-filters" id="scoresFilters" role="group" aria-label="Actividad del leaderboard"></div>
+  </div>
+  <div class="scores-current">
+    <div><span class="scores-section-label">CLASIFICACIÓN ACTUAL</span><h3 id="scoresActivityLabel">TOTAL GENERAL</h3><p id="scoresActivityDesc">Suma de los cuatro talleres y la Batalla final.</p></div>
+    <div class="scores-mini-metrics"><div><strong id="scoresCount">—</strong><span>EQUIPOS CON PUNTOS</span></div><div><strong id="scoresHighest">—</strong><span>MEJOR PUNTAJE</span></div></div>
+  </div>
+  <div class="scores-podium" id="scoresPodium" aria-label="Primeros tres lugares"></div>
+  <div class="scores-table-wrap">
+    <table class="scores-ranking-table" aria-label="Clasificación por actividad">
+      <thead><tr><th scope="col">POS.</th><th scope="col">EQUIPO</th><th scope="col">PUNTAJE</th><th scope="col">RENDIMIENTO RELATIVO</th></tr></thead>
+      <tbody id="scoresRows"><tr><td colspan="4" class="scores-empty">Consultando puntuaciones de Supabase...</td></tr></tbody>
+    </table>
+  </div>
+  <div class="scores-footer"><span id="scoresStatus" role="status" aria-live="polite">CARGANDO...</span><div><button type="button" id="scoresRefreshBtn" class="scores-refresh">↻ ACTUALIZAR</button><span>SE ACTUALIZA CADA 10 S</span></div></div>
+</section>  </div>
+</div>
+
+  <div class="join-overlay" id="joinOverlay">
+    <section class="welcome-card" aria-labelledby="welcomeTitle">
+      <div class="welcome-content">
+        <div class="welcome-top"><span class="sys-tag"><i class="pulse-dot"></i> SISTEMA LISTO</span><span>DESIGN THINKING // 2026</span></div>
+        <p class="micro hero-rule"><span class="micro-bar"></span> CODEXIA / DESIGN THINKING</p>
+        <h1 id="welcomeTitle">DESCIFRA<br><em>EL SISTEMA.</em></h1>
+        <p class="welcome-copy">Cinco vulnerabilidades simuladas. Cinco claves ocultas en el código. Un equipo, una misión y el cronómetro corriendo.</p>
+        <div class="welcome-facts"><span><b>05</b><small>RETOS</small></span><span><b>45</b><small>MINUTOS MÁX.</small></span><span><b>20</b><small>EQUIPOS</small></span></div>
+        <form id="joinForm" autocomplete="off"><label for="joinTeamNumber">IDENTIFICADOR // SELECCIONA TU EQUIPO (1–20)</label><div class="team-selector"><button type="button" id="teamMinus" class="team-step" aria-label="Equipo anterior">−</button><input id="joinTeamNumber" name="teamNumber" type="number" inputmode="numeric" min="1" max="20" step="1" placeholder="—" aria-describedby="teamSelectStatus" autocomplete="off"><button type="button" id="teamPlus" class="team-step" aria-label="Equipo siguiente">+</button></div><p class="team-select-status" id="teamSelectStatus">NINGÚN EQUIPO SELECCIONADO</p><button class="button-primary" type="submit" id="startBtn" disabled><span>START // INICIAR MISIÓN</span><span>›</span></button><p id="joinError" class="join-error" role="alert"></p></form>
+        <div class="welcome-disclaimer">ADVERTENCIA // SIN EQUIPO NO SE PUEDE INICIAR. AL PRESIONAR START COMIENZAN 45 MINUTOS SIN PAUSA. PUNTOS: RETOS RESUELTOS + RAPIDEZ.</div>
+      </div>
+      <section class="welcome-video" aria-labelledby="introVideoTitle">
+        <div class="art-top"><span id="introVideoTitle">CODEXIA // TRANSMISIÓN DE MISIÓN</span><span>ONLINE ●</span></div>
+        <div class="video-terminal">
+          <div class="video-terminal-heading"><span class="pulse-dot" aria-hidden="true"></span> MATERIAL DE INTRODUCCIÓN <span>VIDEO / 01</span></div>
+          <div class="video-screen">
+            <iframe id="introVideo" title="Video de introducción al desafío CODEXIA" src="https://www.youtube-nocookie.com/embed/5z5KkYpFvO4?rel=0" data-embed="https://www.youtube-nocookie.com/embed/5z5KkYpFvO4?rel=0" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <p class="video-terminal-note">TRANSMISIÓN EXTERNA // REQUIERE CONEXIÓN A INTERNET</p>
+          <a class="video-external" href="https://youtu.be/5z5KkYpFvO4" target="_blank" rel="noopener noreferrer">VER DIRECTAMENTE EN YOUTUBE ↗</a>
+        </div>
+        <div class="art-bottom"><span>PROTOCOLO FANTASMA</span><strong>READY <i>_</i></strong></div>
+        <div class="art-corner one" aria-hidden="true"></div><div class="art-corner two" aria-hidden="true"></div>
+      </section>
+    </section>
+  </div>
+</body>
+</html>
